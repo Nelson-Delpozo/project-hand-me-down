@@ -1,0 +1,51 @@
+<!doctype  >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="/partials/head.html :: head">
+</head>
+<body>
+<nav th:include="/partials/navBar.html :: navBar"></nav>
+<h1 th:text="${activity.title}"></h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">image Url</th>
+        <th scope="col">web Url</th>
+        <th scope="col">Category</th>
+        <th scope="col">UserName</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${activity.title}"></td>
+        <td th:text="${activity.body}"></td>
+        <td th:if="${activity.imageUrl != null}"><img th:src="@{${activity.imageUrl}}" style="max-height:100px">
+        </td>
+        <td> <a th:href="@{${activity.webUrl}}" th:text="${activity.getWebUrl()}" target="_blank"></a></td>
+        <td >
+            <p th:each="category : ${activity.getActivityCategories()}"><a th:href="@{/activities/categories/{id} (id= ${category.getId()})}" th:text="${category.getName() }"></a>
+            </p>
+        </td>
+<!--        <td th:text="${activity.user.getUsername()}"></td>-->
+        <td><a th:href="@{'/activities/user/{user_id}'(user_id=${activity.getUser().getId()})}" th:text="${activity.getUser().getUsername()}"></a></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<!---->
+
+
+
+<button><a th:href="@{'/activities/{id}/delete'(id=${activity.id})}">Delete this post</a></button>
+<button><a th:href="@{'/activities/{id}/edit'(id=${activity.id})}">go to edit this post</a></button>
+<button><a th:href="@{'/activities'}">Go back to activities</a></button>
+<button><a th:href="@{/report/{type}/{id}(type = 'activity', id = ${activity.getId()})}">Report Post</a></button>
+
+<div th:insert="partials/footer.html :: footer"></div>
+
+
+
+</body>
+</html>

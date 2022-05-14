@@ -1,0 +1,36 @@
+<!doctype  >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="/partials/head.html :: head">
+</head>
+<body>
+<nav th:include="/partials/navBar.html :: navBar"></nav>
+<h4>individual listing</h4>
+<h1 th:text="${listing.title}"></h1>
+<p th:text="${listing.body}"></p>
+<p th:if="${listing.imageUrl != null}"><img th:src="@{${listing.imageUrl}}" style="max-height:100px"></p>
+<p th:text="${listing.price}"></p>
+<!--<p th:text="${listing.user.getUsername()}"></p>-->
+<a th:href="@{'/listings/user/{user_id}'(user_id=${listing.getUser().getId()})}" th:text="${listing.getUser().getUsername()}"></a>
+<h3>Categories:</h3>
+<div th:each="cat : ${cats}">
+    <span><a th:text="${cat.getName()}" th:href="@{'/listingsByCat/{cat_id}'(cat_id=${cat.getId()})}"></a></span>
+</div>
+<div th:if="${listing.getUser().getId() == user.getId()}">
+<form th:action="@{/listing/edit/{id}(id=${listing.getId()})} " method="get">
+    <button type="submit">Edit Listing</button>
+</form>
+<form th:action="@{/listing/delete/{id}(id=${listing.getId()})}" method="post">
+    <button type="submit">Delete Listing</button>
+</form>
+</div>
+<div sec:authorize="hasAuthority('ADMIN')">
+    <a th:href="@{/post/{id}/delete(id=${listing.getId()})}">Admin Delete Post</a>
+    <br>
+    <a th:href="@{/edit/{id}/post(id=${listing.getId()})}">Admin Edit Post</a>
+</div>
+<button><a th:href="@{'/listings'}">Go back to listings</a></button>
+<button><a th:href="@{/report/{type}/{id}(type = 'listing', id = ${listing.getId()})}">Report Post</a></button>
+<button><a th:href="@{/messaging/{listingId}/{userId}(userId = ${listing.user.getId()}, listingId = ${listing.getId()})}">Send Message</a></button>
+
+</body>
+</html>

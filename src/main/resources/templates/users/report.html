@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="/partials/head.html :: head">
+</head>
+<body>
+<nav th:include="/partials/navBar.html :: navBar"></nav>
+    <div th:if="${objectType == 'post'}">
+        <h1>Sending report to an Admin about the <span th:text="${postType}"></span>: <span th:text="${object.getTitle()}"></span>.
+            <br>
+            From User: <span th:text="${object.getUser().getUsername()}"></span>.
+        </h1>
+    </div>
+    <div th:if="${objectType == 'reply'}">
+        <h1>Sending report to an Admin about the reply from <span th:text="${object.getUser().getUsername()}"></span>.
+            <br>
+            Which said: <span th:text="${object.getBody()}"></span>.
+        </h1>
+    </div>
+    <div th:if="${objectType == 'user'}">
+        <h1>Sending report to an Admin about the user: <span th:text="${object.getUsername()}"></span>.</h1>
+    </div>
+<formfield>
+    <form th:action="@{/report/{type}/{id}(type = ${type}, id = ${id})}" th:object="${message}" method="post" >
+    <label for="title">title:
+        <input th:field="*{subject}" id="title" type="text">
+    </label>
+    <br>
+    <textarea rows="12" cols="100" name="report" th:field="*{body}"></textarea>
+    <button type="submit">Send Report</button>
+</form>
+</formfield>
+</body>
+</html>

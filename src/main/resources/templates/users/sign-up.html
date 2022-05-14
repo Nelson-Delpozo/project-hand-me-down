@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<head th:include="/partials/head.html :: head">
+</head>
+<body>
+<nav th:include="/partials/navBar.html :: navBar"></nav>
+<h1>Create an account</h1>
+<formfield>
+<form th:action="@{/sign-up}" method="POST" th:object="${user}">
+    <label for="username">Username</label>
+    <input id="username" th:field="*{username}" required />
+    <br>
+    <br>
+    <label for="email">Email</label>
+    <input id="email" th:field="*{email}" required />
+    <br>
+    <br>
+    <label for="password">Password</label>
+    <input id="password" type="password" th:field="*{password}" required />
+    <br>
+    <br>
+    <label for="user-phone">Phone Number</label>
+    <input id="user-phone" type="text" th:field="*{userPhone}" required />
+    <br>
+    <br>
+    <label for="user-location">Location</label>
+    <input id="user-location" type="text" th:field="*{userLocation}" placeholder="San Antonio" required />
+    <br>
+    <br>
+    <input th:field="*{userIMG}" type="text" name="ListingImage" id="ListingImage" class="" placeholder="Image Url"/>
+    <button type="button" onclick="upload()">upload image</button>
+    <p>preview: </p>
+    <img id="profile-preview" src="" height="75px">
+    <br>
+    <br>
+    <input value="Sign me up!" type="submit" />
+</form>
+</formfield>
+<br>
+<br>
+<!--<footer th:include="partials::my-footer"></footer>-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function upload() {
+        const apiKey = [[${filestackKey}]];
+        let apiKey1 = [[${fileStackKey}]];
+        const client = filestack.init(apiKey);
+        const options = {
+            onUploadDone: file => {
+                let imgURL = file.filesUploaded[0].url;
+                console.log(imgURL);
+                document.getElementById("ListingImage").value = imgURL;
+                document.getElementById("profile-preview").src = imgURL;
+            }
+        };
+        client.picker(options).open();
+    }
+
+    /*]]>*/
+</script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+</body>
+</html>

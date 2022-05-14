@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="/partials/head.html :: head">
+</head>
+<body>
+<nav th:include="/partials/navBar.html :: navBar"></nav>
+<h1><strong>Project HandMeDown</strong></h1>
+<div class="">
+    <h3>A Place for Parents to Connect</h3>
+</div>
+<div class="">
+    <form action="/listings" method="get">
+        <button type="submit">go to listings</button>
+    </form>
+</div>
+<div class="">
+    <form action="/activities" method="get">
+        <button type="submit">go to activities</button>
+    </form>
+</div>
+<div class="">
+    <form action="/forum" method="get">
+        <button type="submit">go to forum</button>
+    </form>
+</div>
+</body>
+</html>

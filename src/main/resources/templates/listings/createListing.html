@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<head th:include="/partials/head.html :: head">
+</head>
+<body>
+<nav th:include="/partials/navBar.html :: navBar"></nav>
+<formfield>
+<form th:action="@{/create/listing}" th:method="post" th:object="${listing}">
+    <input th:field="*{title}" type="text" name="ListingTitle" id="ListingTitle" class="" placeholder="Title" required/>
+    <br>
+    <br>
+    <input th:field="*{body}" type="text" name="ListingBody" id="ListingBody" class="" placeholder="Body" required/>
+    <br>
+    <br>
+    <input th:field="*{price}" type="text" name="ListingPrice" id="ListingPrice" class="" placeholder="Price" required/>
+    <br>
+    <br>
+    <input th:field="*{imageUrl}" type="text" name="ListingImage" id="ListingImage" class="" placeholder="Image Url"/>
+    <button type="button" onclick="upload()">upload image</button>
+    <br>
+    <br>
+    <p>
+        <label>Select Categories:
+            <br>
+            <input type="checkbox" name="listingsCategories"
+                   th:each="cat : ${cats}"
+                   th:text="${cat.getName()}"
+                   th:value="${cat.id}"
+                   th:field="*{listingsCategories}"/>
+        </label>
+    </p>
+    <br>
+    <br>
+    <button type="submit">Create Listing</button>
+    <br>
+    <br>
+</form>
+</formfield>
+
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function upload() {
+        const apiKey = [[${filestackKey}]];
+        let apiKey1 = [[${fileStackKey}]];
+        const client = filestack.init(apiKey);
+        const options = {
+            onUploadDone: file => {
+                let imgURL = file.filesUploaded[0].url;
+                console.log(imgURL);
+                document.getElementById("ListingImage").value = imgURL;
+            }
+        };
+        client.picker(options).open();
+    }
+
+    /*]]>*/
+</script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+</body>
+</html>
+
+

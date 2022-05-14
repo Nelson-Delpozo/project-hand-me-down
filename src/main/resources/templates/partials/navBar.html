@@ -1,0 +1,44 @@
+<nav class=" " th:fragment="navBar" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="" id="">
+        <div class="">
+            <ul class="">
+                <li><a class="" href="/">Project HandMeDown</a></li>
+            </ul>
+
+            <div sec:authorize="isAnonymous()">
+                <ul class="">
+                    <li class=""><a class="" th:href="@{/sign-up}">Register</a></li>
+                    <li class=""><a class="" th:href="@{/listings}">Marketplace</a></li>
+                    <li class=""><a class="" th:href="@{/forum}">Forum</a></li>
+                    <li class=""><a class="" th:href="@{/activities}">Activities</a></li>
+                    <li class=""><a class="" th:href="@{/about}">About Us</a></li>
+                    <li class=""><a class="" th:href="@{/login}">Login</a></li>
+                </ul>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <ul class="d-flex align-items-center">
+                    <li class=""><a class="" th:href="@{/profile}">Profile</a></li>
+                    <li class=""><a class="" th:href="@{/listings}">Marketplace</a></li>
+                    <li class=""><a class="" th:href="@{/forum}">Forum</a></li>
+                    <li class=""><a class="" th:href="@{/activities}">Activities</a></li>
+                    <li class=""><a class="" th:href="@{/about}">About Us</a></li>
+                    <li class="">
+                        <form th:action="@{/logout}" th:method="post">
+                            <button class="" type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!--        <form class="">-->
+            <!--            <input id="input" class="" type="search" placeholder="Search" aria-label="Search">-->
+            <!--            <button id="search" class="" type="submit">Search</button>-->
+            <!--        </form>-->
+
+
+        </div>
+    </div>
+</nav>
+
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="/partials/head.html :: head">
+</head>
+<body>
+<nav th:include="/partials/navBar.html :: navBar"></nav>
+<form th:action="@{/listings/search}" method="get">
+    <input type="text" name="keyword" th:value="${keyword}" placeholder="Search Listings by keyword" size="50">
+    <button type="submit" class="btn btn-info">search</button>
+    <a class="" th:href="@{'/listings'}" role="">reset</a>
+</form>
+<br>
+<br>
+<h1>This is the marketplace!</h1>
+<br>
+<div>
+    <a th:href="@{/listings}" th:text="'newest first &#8595;'"></a>
+    <a th:href="@{/listings/reverse}" th:text="'oldest first &#8593;'"></a>
+    <br>
+    <br>
+</div>
+<div th:each="listing : ${listings}">
+    <a th:href="@{/listing/{id}(id=${listing.getId()})}"><h4 th:text="${listing.title}"></h4></a>
+    <p th:text="${listing.body}"></p>
+    <p th:if="${listing.imageUrl != null}"><img th:src="@{${listing.imageUrl}}" style="max-height:100px"></p>
+    <p th:text="${listing.price}"></p>
+    <p th:text="${listing.timestamp}"></p>
+    <!--    <p th:text="${listing.user.getUsername()}"></p>-->
+    <a th:href="@{'/listings/user/{user_id}'(user_id=${listing.getUser().getId()})}"
+       th:text="${listing.getUser().getUsername()}"></a>
+    <br>
+    <h6>Categories: </h6>
+    <span th:each="cat : ${listing.getListingsCategories()}"><a th:text="${cat.getName()}"
+                                                                th:href="@{'/listingsByCat/{cat_id}'(cat_id=${cat.getId()})}"></a> </span>
+    <br>
+    <br>
+</div>
+<div>
+    <h3>Browse by category:</h3>
+    <p th:each="cat : ${cats}"><a th:text="${cat.getName()}" th:href="@{'/listingsByCat/{cat_id}'(cat_id=${cat.getId()})}"></a></p>
+</div>
+<form action="/create/listing" method="get">
+    <button type="submit">Create Listing</button>
+</form>
+
+
+</body>
+</html>
