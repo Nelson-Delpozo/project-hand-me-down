@@ -86,8 +86,6 @@
         <!-- Container wrapper -->
     </nav>
     <!-- Navbar -->
-    <!-- Navbar -->
-
     <!-- Background image -->
     <div
             class="p-5 text-center bg-image"
@@ -110,7 +108,9 @@
     </div>
     <!-- Background image -->
 </header>
+
 <div class="spacer"></div>
+
 <form th:action="@{/listings/search}" method="get">
     <input type="text" name="keyword" th:value="${keyword}" placeholder="Search Listings by keyword" size="50">
     <button type="submit" class="btn btn-info">search</button>
@@ -129,10 +129,16 @@
     <br>
     <br>
 </div>
-<div th:each="listing : ${listings}">
-    <a th:href="@{/listing/{id}(id=${listing.getId()})}"><h4 th:text="${listing.title}"></h4></a>
-    <p th:text="${listing.body}"></p>
-    <p th:if="${listing.imageUrl != null}"><img th:src="@{${listing.imageUrl}}" style="max-height:100px"></p>
+<div class="d-flex justify-content-center flex-column flex-md-row flex-wrap">
+    <div th:each="listing : ${listings}">
+    <div class="card mx-2 mt-3 p-3">
+    <div class="bg-image hover-overlay ripple text-center" data-mdb-ripple-color="light">
+        <p th:if="${listing.imageUrl != null}"><a th:href="@{/listing/{id}(id=${listing.getId()})}"><img th:src="@{${listing.imageUrl}}" class="img-fluid rounded-pill" style="max-height:200px"></a></p>
+    </div>
+    <div class="card-body text-center text-white">
+    <a th:href="@{/listing/{id}(id=${listing.getId()})}"><h4 th:text="${listing.title}" class="card-title"></h4></a>
+    <p th:text="${listing.body}" class="card-text" th:width="100px"></p>
+<!--    <p th:if="${listing.imageUrl != null}"><img th:src="@{${listing.imageUrl}}" style="max-height:100px"></p>-->
     <p th:text="${listing.price}"></p>
     <p th:text="${listing.timestamp}"></p>
     <!--    <p th:text="${listing.user.getUsername()}"></p>-->
@@ -144,11 +150,18 @@
                                                                 th:href="@{'/listingsByCat/{cat_id}'(cat_id=${cat.getId()})}"></a> </span>
     <br>
     <br>
+    </div>
 </div>
-<div>
+</div>
+</div>
+<br>
+<br>
+<section>
     <h3>Browse by category:</h3>
-    <p th:each="cat : ${cats}"><a th:text="${cat.getName()}" th:href="@{'/listingsByCat/{cat_id}'(cat_id=${cat.getId()})}"></a></p>
-</div>
+    <a th:each="cat : ${cats}" th:text="${cat.getName()}" th:href="@{'/listingsByCat/{cat_id}'(cat_id=${cat.getId()})}" class="mx-3"></a>
+</section>
+<br>
+<br>
 
 
 <footer class="text-center text-white">
