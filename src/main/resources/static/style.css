@@ -1,19 +1,22 @@
-.navbar{
-    background-color: #B4D1CE;
-
-}
-body{
-    background-color: #CAD2B2;
-}
-
 .spacer{
     height: 50px;
 }
 
 .card{
-    background-color: #B4D1CE;
+    background-color: cornflowerblue;
 }
+
 .path{
     background-color: #4D1D72;
     color: white;
+}
+
+.navbar-brand, h1{
+    font-family: 'Peralta', cursive;
+}
+p{
+    font-family: 'Biryani', sans-serif;
+}
+h2, h3{
+    font-family: 'Ubuntu Condensed', sans-serif;
 }
