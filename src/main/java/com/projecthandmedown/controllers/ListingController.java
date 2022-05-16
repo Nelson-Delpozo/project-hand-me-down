@@ -60,11 +60,13 @@ public class ListingController {
     @GetMapping("/listing/{id}")
     public String listingView(Model model, @PathVariable Long id) {
         Listing listing = listingDao.getById(id);
+        List<ListingCategory> categories = listingCategoryDao.findAll();
         List<ListingCategory> cats = listing.getListingsCategories();
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", loggedInUser);
         model.addAttribute("listing", listing);
         model.addAttribute("cats", cats);
+        model.addAttribute("categories", categories);
 
 
         return "listings/listing";
@@ -136,8 +138,10 @@ public class ListingController {
     public String seeAllUserListings(@PathVariable Long user_id, Model model) {
         User targetUser = userDAO.getUserById(user_id);
         List<Listing> listings = listingDao.getByUser(targetUser);
+        List<ListingCategory> categories = listingCategoryDao.findAll();
         model.addAttribute("listings", listings);
         model.addAttribute("user", targetUser);
+        model.addAttribute("categories", categories);
 
         return "listings/listingUserPosts";
     }
@@ -156,6 +160,7 @@ public class ListingController {
     public String filteredActivities(Model model, @RequestParam String keyword) {
         model.addAttribute("keyword", keyword.toLowerCase(Locale.ROOT));
         List<Listing> listings = listingDao.findAll();
+        List<ListingCategory> cats = listingCategoryDao.findAll();
         List<Listing> filteredListings = new ArrayList<>();
 
         for (int i = 0; i < listings.size(); i++) {
@@ -178,6 +183,7 @@ public class ListingController {
             }
         }
         model.addAttribute("listings", filteredListings);
+        model.addAttribute("cats", cats);
         return "listings/listingsView";
     }
 
