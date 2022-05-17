@@ -2,8 +2,14 @@
     height: 50px;
 }
 
-.index-card{
-    background-color: cornflowerblue;
+.index-card-1{
+    background-color: #9EC1A3;
+}
+.index-card-2{
+    background-color: #FF9B85;
+}
+.index-card-3{
+    background-color: #6495ED;
 }
 
 .listings-card{
